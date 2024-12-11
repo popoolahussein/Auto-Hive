@@ -3,13 +3,10 @@ import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import ProfileHamburger from '../auth/ProfileHamburger';
 
 function add() {
-    const user = {
-        firstName: 'Korede',
-    };
   return (
         <View style={styles.container}>
             <View style={styles.addph}>
-              <ProfileHamburger user={user} title="Welcome" />
+              <ProfileHamburger title="Welcome" />
             </View>
             <View>
                 <Text style={styles.addtitle}>No previous car{"\n"} records found</Text>
