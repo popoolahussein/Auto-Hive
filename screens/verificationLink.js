@@ -6,15 +6,11 @@ import Button from '../auth/button';
 import { useNavigation } from '@react-navigation/native';
 
 function VerificationLink() {
-    const user = {
-        firstName: 'Korede',
-    };
-
     const navigation = useNavigation();
 
     return (
         <View style={styles.container}>
-            <ProfileHamburger user={user} title="Welcome" style={styles.rpph} />
+            <ProfileHamburger title="Welcome" style={styles.rpph} />
             <Image
                 source={require('../assets/verfemail.png')}
                 style={styles.verfimg}
