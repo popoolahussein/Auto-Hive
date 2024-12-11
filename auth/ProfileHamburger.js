@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../context/UserContext'; 
 
-const ProfileHamburger = ({ user, title }) => {
+const ProfileHamburger = ({ title }) => {
+  const { currentUser } = useContext(UserContext);
   const navigation = useNavigation();
 
   return (
@@ -10,15 +12,15 @@ const ProfileHamburger = ({ user, title }) => {
       <TouchableOpacity onPress={() => navigation.navigate('profile', { user })}>
       <Image
           source={
-            user.image
-              ? { uri: user.image }
+            currentUser?.image
+              ? { uri: currentUser.image }
               : require('../assets/defaultProfile.png')
           }
           style={styles.image}
         />
       </TouchableOpacity>
       <Text style={styles.name}>
-        {user.firstName}{"\n"}<Text style={styles.title}>{title}</Text>
+      {currentUser?.firstName || 'Korede'}{"\n"}<Text style={styles.title}>{title}</Text>
       </Text>
     </View>
   );
