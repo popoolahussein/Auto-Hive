@@ -13,7 +13,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <ProfileHamburger user={user} title="Welcome back!" />
+        <ProfileHamburger title="Welcome back!" />
         
         <View style={styles.headerIcons}>
         <TouchableOpacity onPress={() => navigation.navigate('NotificationScreen')}>
