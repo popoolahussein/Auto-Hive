@@ -6,9 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const Home = () => {
   const navigation = useNavigation();
-  const user = {
-    firstName: 'Korede',
-  };
 
   return (
     <View style={styles.container}>
