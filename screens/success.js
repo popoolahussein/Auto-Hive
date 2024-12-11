@@ -6,12 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 
 function success() {
   const navigation = useNavigation();
-    const user = {
-        firstName: 'Korede',
-      };
   return (
     <View style={styles.container}>
-        <ProfileHamburger user={user} title="Welcome" style={styles.rpph} />
+        <ProfileHamburger title="Welcome" style={styles.rpph} />
 
         <View>
             <Image style={styles.successimg} source={require("../assets/success.png")} />
