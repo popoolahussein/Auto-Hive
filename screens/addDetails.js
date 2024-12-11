@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useContext} from 'react';
 import { View, StyleSheet, Image, Text, TextInput } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ProfileHamburger from '../auth/ProfileHamburger';
 import Button from '../auth/button';
-
+import { CarDetailsContext } from '../context/CarDetailsContext';
 
 function addDetails() {
-    const user = {
-        firstName: 'Korede',
+    const { carDetails, updateCarDetails } = useContext(CarDetailsContext);
+
+    const handleInputChange = (name, value) => {
+        updateCarDetails(name, value);
     };
+
   return (
     <KeyboardAwareScrollView>
         <View style={styles.container}>
             <View style={styles.addph}>
-              <ProfileHamburger user={user} title="Welcome" />
+              <ProfileHamburger title="Welcome" />
             </View>
             <View>
                 <Text style={styles.adDtitle}>First, Let’s get some of{"\n"} details</Text>
@@ -25,30 +28,40 @@ function addDetails() {
                     style={styles.input}
                     placeholder="Car Name (e.g. My camry, Santa, RX350)"
                     placeholderTextColor={"#aaa"}
+                    value={carDetails.carName}
+                    onChangeText={(value) => handleInputChange('carName', value)}
                 />
                 </View>
                 <View style={styles.adDinputboxii}>
                 <View style={styles.adinputboxi}>
                     <TextInput
-                    placeholder='Brand'
-                    placeholderTextColor={"#aaa"}
-                    style={styles.srque} />
-                    <Image source={require('../assets/secure.png')} style={styles.sriarrow} />
+                      placeholder='Brand'
+                      placeholderTextColor={"#aaa"}
+                      style={styles.srque}
+                      value={carDetails.brand}
+                      onChangeText={(value) => handleInputChange('brand', value)} 
+                    />
+                    <Image source={require('../assets/secure.png')} style={styles.sriarrow} 
+                    />
                 </View>
                 <View style={styles.adinputboxi}>
                     <TextInput
                      placeholder='Type'
                      placeholderTextColor={"#aaa"}
                      style={styles.srque}
+                     value={carDetails.type}
+                     onChangeText={(value) => handleInputChange('type', value)}
                     />
                     <Image source={require('../assets/secure.png')} style={styles.sriarrow} />
                 </View>
                 </View>
                 <View style={styles.adDinputbox}>
                 <TextInput
-                    style={styles.srquei}
-                    placeholder="Vehicle Identification Number"
-                    placeholderTextColor={"#aaa"}
+                  style={styles.srquei}
+                  placeholder="Vehicle Identification Number"
+                  placeholderTextColor={"#aaa"}
+                  value={carDetails.vin}
+                  onChangeText={(value) => handleInputChange('vin', value)}
                 />
                 </View>
                 <View style={styles.emailboxii}>
@@ -57,6 +70,8 @@ function addDetails() {
                     style={styles.regnum}
                     placeholder="XXXXXXX"
                     placeholderTextColor={'rgba(0, 0, 0, 1)'}
+                    value={carDetails.regNumber}
+                    onChangeText={(value) => handleInputChange('regNumber', value)}
                     />
                 </View>
                 <View style={styles.adDinputbox}>
@@ -64,6 +79,8 @@ function addDetails() {
                     style={styles.srquei}
                     placeholder="Engine Number"
                     placeholderTextColor={"#aaa"}
+                    value={carDetails.engineNumber}
+                    onChangeText={(value) => handleInputChange('engineNumber', value)}
                 />
                 </View>
                 <View style={styles.srinputboxi}>
@@ -71,6 +88,8 @@ function addDetails() {
                         style={styles.srquei} 
                         placeholder="Pick a color"
                         placeholderTextColor={"#aaa"}
+                        value={carDetails.color}
+                        onChangeText={(value) => handleInputChange('color', value)}
                     />
                     <Image source={require('../assets/secure.png')} style={styles.sriarrow} />
                 </View>
@@ -79,6 +98,8 @@ function addDetails() {
                         style={styles.srquei} 
                         placeholder="Pick the image most similar to your car"
                         placeholderTextColor={"#aaa"}
+                        value={carDetails.carImage}
+                        onChangeText={(value) => handleInputChange('carImage', value)}
                     />
                     <Image source={require('../assets/secure.png')} style={styles.sriarrow} />
                 </View>
@@ -90,6 +111,7 @@ function addDetails() {
                 textStyle={styles.skipButtonText}
                 imageStyles={styles.imageStyle}
                 onPress={() => navigation.navigate('CreatePINScreen')}
+
                 imageSource={require('../assets/chevrons-right.png')}
             />
             <Button
@@ -209,7 +231,6 @@ const styles = StyleSheet.create({
       },
       skipButton: {
         width: 102,
-        // padding: 15,
         height: 40,
         justifySelf: 'flex-end',
         alignSelf: 'flex-end',

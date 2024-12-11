@@ -1,24 +1,31 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useContext} from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import Button from '../auth/button';
+import { UserContext } from '../context/UserContext';
+import { CarDetailsContext } from '../context/CarDetailsContext';
 
-const profile = ({ navigation, route }) => {
-  const user = route?.params?.user || {};
-  const navigations = useNavigation();
+const profile = ({ route }) => {
+  const { user } = useContext(UserContext);
+  const { carDetails } = useContext(CarDetailsContext)
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigations.navigate('Home')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={require('../assets/back-arrow.png')} style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
       </View>
       <View style={styles.imagebox} >
-      <Image 
-        source={require("../assets/profile.png")}
-        style={styles.image} 
-      />
+      <Image
+          source={
+            user?.image
+              ? { uri: user.image }
+              : require('../assets/profile.png')
+          }
+          style={styles.image}
+        />
       </View>
       <View>
         <Text style={styles.title}>Your Info</Text>
@@ -30,8 +37,8 @@ const profile = ({ navigation, route }) => {
       </View>
       <Text style={styles.text}>Email{"\n"}<Text style={styles.textinfo}>{user.email || 'ali.thakib@gmail.com'}</Text></Text>
       <Text style={styles.text}>Phone Number{"\n"}<Text style={styles.textinfo}>{user.phoneNumber || '+234-80xxxxxxxx'}</Text></Text>
-      <Text style={styles.text}>No. of Cars{"\n"}<Text style={styles.textinfo}>{user.cars || '2'}</Text></Text>
-      <Text style={styles.text}>Date Registered{"\n"}<Text style={styles.textinfo}>{user.date || '22/01/2022'}</Text></Text>
+      <Text style={styles.text}>No. of Cars{"\n"}<Text style={styles.textinfo}>{carDetails.noOfCars || '2'}</Text></Text>
+      <Text style={styles.text}>Date Registered{"\n"}<Text style={styles.textinfo}>{carDetails.dateRegistered || '22/01/2022'}</Text></Text>
       </View>
       <Button
         title="Edit Profile"

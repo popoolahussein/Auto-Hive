@@ -11,16 +11,18 @@ import * as ImagePicker from 'expo-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import Button from '../auth/button';
 
-const EditProfileScreen = ({ navigation, route }) => {
+const EditProfileScreen = ({ route }) => {
   const { user = {}, updateUser } = route.params || {};
 
   const [firstName, setFirstName] = useState(user.firstName || '');
   const [lastName, setLastName] = useState(user.lastName || '');
   const [email, setEmail] = useState(user.email || '');
   const [image, setImage] = useState(user.image || null);
-  const [phone, setPhone] = useState(user.phone || ''); // Added phone number state
+  const [countryCode, setCountryCode] = useState(user.countryCode || '+234');
+  const [phone, setPhone] = useState(user.phone || '');
 
-  // Function to pick an image
+  const navigation = useNavigation();
+
   const handleImagePick = async () => {
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!permissionResult.granted) {
@@ -41,12 +43,25 @@ const EditProfileScreen = ({ navigation, route }) => {
   };
 
   const handleSave = () => {
+    if (!firstName || !lastName || !email) {
+      alert('Please fill all the required fields.');
+      return;
+    }
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z]+\.[a-zA-Z]{2,4}$/;
+    if (!emailPattern.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const fullPhoneNumber = `${countryCode}${phone}`;
+
     const updatedUser = {
       firstName,
       lastName,
       email,
       image,
-      phone,
+      phone: fullPhoneNumber,
     };
 
     if (updateUser) {
@@ -55,11 +70,10 @@ const EditProfileScreen = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const navigations = useNavigation();
   return (
     <View style={styles.container}>
        <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigations.navigate('profile')}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image source={require('../assets/back-arrow.png')} style={styles.backIcon} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Profile</Text>
@@ -111,10 +125,19 @@ const EditProfileScreen = ({ navigation, route }) => {
       </View>
 
       <View style={styles.phoneInputContainer}>
-        <TextInput style={styles.countryCode} placeholder="+234" placeholderTextColor="#333" keyboardType="phone-pad" />
+        <TextInput
+         style={styles.countryCode} 
+         placeholder="+234" 
+         placeholderTextColor="#333" 
+         keyboardType="phone-pad"
+         value={countryCode}
+         onChangeText={setCountryCode}
+        />
         <View style={styles.phoneInputbox}>
         <TextInput 
-          style={styles.phoneInput} placeholder="Phone number" keyboardType="phone-pad"
+          style={styles.phoneInput} 
+          placeholder="Phone number" 
+          keyboardType="phone-pad"
           value={phone}
           onChangeText={setPhone}
         />
