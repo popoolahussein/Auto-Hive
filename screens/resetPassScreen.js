@@ -8,12 +8,10 @@ import { useNavigation } from '@react-navigation/native';
 
 function resetPassScreen() {
   const navigation = useNavigation();
-    const user = {
-        firstName: 'Korede',
-      };
+    
   return (
     <KeyboardAwareScrollView style={styles.container}>
-        <ProfileHamburger user={user} title="Welcome" style={styles.rpph} />
+        <ProfileHamburger title="Welcome" style={styles.rpph} />
 
         <View>
             <Text style={styles.rptopic}>Reset your Password</Text>
